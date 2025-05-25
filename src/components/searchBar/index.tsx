@@ -1,4 +1,6 @@
 import React from 'react';
+import { Input, Button } from 'reactstrap/'
+import './search-bar.css'
 
 type SearchBarProps = {
   search: string;
@@ -10,12 +12,12 @@ const SearchBar = ({search, onSearchChange, onSearchSubmit}: SearchBarProps) => 
   return (
     <div>
       <form onSubmit={onSearchSubmit}>
-        <input type="text"
+        <Input type="text"
+               className="search-input"
                placeholder="Digite o nome do filme"
-               style={{ width: "400px", padding: "5px", marginRight: "10px", marginBottom: "10px" }}
                value={search}
                onChange={onSearchChange} />
-        <button type="submit" style={{ backgroundColor: "gray", marginBottom: "10px" }}>Buscar</button>
+        <Button type="submit" className='search-button'>Buscar</Button>
       </form>
     </div>
   )
