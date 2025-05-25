@@ -1,6 +1,5 @@
 import React from 'react';
 import { Input, Button } from 'reactstrap/'
-import './search-bar.css'
 
 type SearchBarProps = {
   search: string;
@@ -12,12 +11,13 @@ const SearchBar = ({search, onSearchChange, onSearchSubmit}: SearchBarProps) => 
   return (
     <div>
       <form onSubmit={onSearchSubmit}>
-        <Input type="text"
-               className="search-input"
-               placeholder="Digite o nome do filme"
-               value={search}
-               onChange={onSearchChange} />
-        <Button type="submit" className='search-button'>Buscar</Button>
+        <div className="d-flex">
+          <Input type="text"
+                placeholder="Digite o nome do filme"
+                value={search}
+                onChange={onSearchChange} />
+          <Button type="submit" className="ms-2">Buscar</Button>
+        </div>
       </form>
     </div>
   )

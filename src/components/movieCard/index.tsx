@@ -11,7 +11,7 @@ const MovieCard = ({title, year, poster}: MovieCardProps) => {
     <div className="movie-card">
       <img src={imgSource} alt={title} />
       <div className="movie-info">
-        <h3>{title} - {year}</h3>
+        <h5>{title} - {year}</h5>
       </div>
     </div>
   )
