@@ -1,22 +1,29 @@
+import { useNavigate } from 'react-router-dom';
+import type { Movie } from '../../types/movie';
+
 type MovieCardProps = {
-  title: string;
-  year: string;
-  poster: string;
+  movie: Movie;
 }
 
-const MovieCard = ({title, year, poster}: MovieCardProps) => {
+const MovieCard = ({movie}: MovieCardProps) => {
   const no_image_available = "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
-  const imgSource = poster !== "N/A" ? poster : no_image_available;
+  const imgSource = movie.Poster !== "N/A" ? movie.Poster : no_image_available;
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/movie/${movie.imdbID}`)
+  }
 
   return (
-    <div className="movie-card">
+    <div className="movie-card" onClick={handleClick}>
       <img src={imgSource}
-           alt={title}
+           alt={movie.Title}
            onError={(e) => {
             e.currentTarget.src = no_image_available;
            }} />
       <div className="movie-info">
-        <h5>{title} - {year}</h5>
+        <h5>{movie.Title} - {movie.Year}</h5>
+
       </div>
     </div>
   )
