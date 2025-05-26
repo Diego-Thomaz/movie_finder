@@ -13,7 +13,7 @@ const SearchBar = ({search, onSearchChange, onSearchSubmit}: SearchBarProps) => 
       <form onSubmit={onSearchSubmit}>
         <div className="d-flex">
           <Input type="text"
-                placeholder="Digite o nome do filme"
+                placeholder="Enter the movie name to search"
                 value={search}
                 onChange={onSearchChange} />
           <Button type="submit" className="ms-2">Buscar</Button>

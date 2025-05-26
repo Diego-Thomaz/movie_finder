@@ -1,8 +1,8 @@
 import { getMovies } from "../../services/movies";
 import { useState } from "react";
-import { Pagination, PaginationItem, PaginationLink } from "reactstrap"
 import SearchBar from "../../components/searchBar";
 import MovieCard from "../../components/movieCard";
+import PaginationBar from "../../components/paginationBar";
 import "./Movies.css";
 
 const Movies = () => {
@@ -39,14 +39,14 @@ const Movies = () => {
 
   const totalPages = Math.ceil(totalResults / 10);
 
-  const handlePageClick = (pageNumber: number) => {
+  const handlePageChange = (pageNumber: number) => {
     setPage(pageNumber);
     fetchMovies(search, pageNumber);
   }
 
   return <>
     <div className="movies-container">
-      <h1>Lista de Filmes</h1>
+      <h1>Movie's list</h1>
 
       <SearchBar
         search={search}
@@ -65,23 +65,12 @@ const Movies = () => {
         ))}
       </div>
 
-      {totalResults > 10 && (
-        <Pagination className="justify-content-center mt-4">
-          <PaginationItem disabled={page === 1}>
-            <PaginationLink previous onClick={() => handlePageClick(page - 1)} />
-          </PaginationItem>
-
-          {Array.from({ length: totalPages }, (_, i) => i + 1)
-                .map((pageNum) => (
-                  <PaginationItem key={pageNum} active={pageNum === page}>
-                    <PaginationLink onClick={() => handlePageClick(pageNum)}>{pageNum}</PaginationLink>
-                  </PaginationItem>
-          ))}
-
-          <PaginationItem disabled={page === totalPages}>
-            <PaginationLink next onClick={() => handlePageClick(page + 1)} />
-          </PaginationItem>
-        </Pagination>
+      {totalPages > 1 && (
+        <PaginationBar
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       )}
     </div>
   </>
