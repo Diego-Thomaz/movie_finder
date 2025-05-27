@@ -74,13 +74,13 @@ const Movies = () => {
         </div>
       )}
 
-      {totalPages > 1 && (
+      {totalPages > 1 ? (
         <PaginationBar
           currentPage={page}
           totalPages={totalPages}
           onPageChange={handlePageChange}
         />
-      )}
+      ) : null}
     </div>
   </>
 }

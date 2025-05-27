@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getMovieById } from '../../services/movies';
 import LoadingSpinner from '../../components/loadingSpinner';
+import './movie-details.css';
 
 const MovieDetails = () => {
   const { imdbID } = useParams();
@@ -27,18 +28,24 @@ const MovieDetails = () => {
   if (!movie || movie.Response === "False") return <div>Movie not found!</div>
 
   return (
-    <div className="container my-4">
+    <div className="main-div">
       <h1>{movie.Title} - {movie.Year}</h1>
+      <div className="movie-details-container">
+        <div>
+          <img src={movie.Poster}
+              alt={movie.Title}
+              onError={(e) => {
+                e.currentTarget.src = no_image_available;
+              }} />
+        </div>
 
-      <img src={movie.Poster}
-           alt={movie.Title}
-           onError={(e) => {
-             e.currentTarget.src = no_image_available;
-           }} />
-      <p><strong>Ano:</strong> {movie.Year}</p>
-      <p><strong>Gênero:</strong> {movie.Genre}</p>
-      <p><strong>Diretor:</strong> {movie.Director}</p>
-      <p><strong>Sinopse:</strong> {movie.Plot}</p>
+        <div>
+          <p><strong>Ano:</strong> {movie.Year}</p>
+          <p><strong>Gênero:</strong> {movie.Genre}</p>
+          <p><strong>Diretor:</strong> {movie.Director}</p>
+          <p><strong>Sinopse:</strong> {movie.Plot}</p>
+        </div>
+      </div>
     </div>
   )
 }
