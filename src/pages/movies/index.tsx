@@ -3,6 +3,7 @@ import { useState } from "react";
 import SearchBar from "../../components/searchBar";
 import MovieCard from "../../components/movieCard";
 import PaginationBar from "../../components/paginationBar";
+import LoadingSpinner from "../../components/loadingSpinner";
 import "./Movies.css";
 
 const Movies = () => {
@@ -10,17 +11,26 @@ const Movies = () => {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const [totalResults, setTotalResults] = useState(0)
+  const [loading, setLoading] = useState(false);
 
   const fetchMovies = async (query: string, page: number = 1) => {
-    const data = await getMovies(query, page);
+    setLoading(true);
 
-    if(data.Response === "True") {
-      setMovies(data.Search);
-      setTotalResults(data.totalResults);
-    }
-    else {
-      setMovies([]);
-      setTotalResults(0);
+    try {
+      const data = await getMovies(query, page);
+
+      if(data.Response === "True") {
+        setMovies(data.Search);
+        setTotalResults(data.totalResults);
+      }
+      else {
+        setMovies([]);
+        setTotalResults(0);
+      }
+    } catch (error) {
+      console.error("Error fetching movies!")
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,24 +64,23 @@ const Movies = () => {
         onSearchSubmit={handleSearchSubmit}
       />
 
-      <div className="movie-grid">
-        {movies.map((movie: any) => (
-          <MovieCard
-            key={movie.imdbID}
-            title={movie.Title}
-            year={movie.Year}
-            poster={movie.Poster}
-          />
-        ))}
-      </div>
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <div className="movie-grid">
+          {movies.map((movie: any) => (
+            <MovieCard key={movie.imdbID} movie={movie} />
+          ))}
+        </div>
+      )}
 
-      {totalPages > 1 && (
+      {totalPages > 1 ? (
         <PaginationBar
           currentPage={page}
           totalPages={totalPages}
           onPageChange={handlePageChange}
         />
-      )}
+      ) : null}
     </div>
   </>
 }

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const getMovies = async (query: string, page: number = 1) => {
   const { data } = await axios.get(
-    "http://www.omdbapi.com/", {
+    import.meta.env.VITE_API_URL, {
       params: {
         apikey: import.meta.env.VITE_API_KEY,
         s: query,
@@ -12,4 +12,16 @@ const getMovies = async (query: string, page: number = 1) => {
   return data;
 }
 
-export { getMovies };
+const getMovieById = async (movieId: string) => {
+  const { data } = await axios.get(
+    import.meta.env.VITE_API_URL, {
+      params: {
+        apikey: import.meta.env.VITE_API_KEY,
+        i: movieId
+      }
+    }
+  );
+  return data;
+}
+
+export { getMovies, getMovieById };

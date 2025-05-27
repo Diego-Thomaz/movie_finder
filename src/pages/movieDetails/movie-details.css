@@ -1,0 +1,10 @@
+.main-div {
+  margin: 20px;
+}
+
+.movie-details-container {
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+  align-items: center;
+}
